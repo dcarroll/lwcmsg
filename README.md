@@ -30,24 +30,26 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx lightning:create -n <string> [-e] [-l] [-d] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-lightningcreate--n-string--e--l--d---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx lightning:messagechannel:create -n <string> [-e] [-l <string>] [-d <string>] [-f <array>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-lightningmessagechannelcreate--n-string--e--l-string--d-string--f-array---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx lightning:create -n <string> [-e] [-l] [-d] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx lightning:messagechannel:create -n <string> [-e] [-l <string>] [-d <string>] [-f <array>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 create a message channel to enable communication between Visualforce, Aura, and LWC
 
 ```
 USAGE
-  $ sfdx lightning:create -n <string> [-e] [-l] [-d] [--json] [--loglevel 
+  $ sfdx lightning:messagechannel:create -n <string> [-e] [-l <string>] [-d <string>] [-f <array>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --outputdir                                                                   folder to put generated message
+  -d, --outputdir=outputdir                                                         folder to put generated message
                                                                                     channel in
 
   -e, --exposed                                                                     expose the channel globally
 
-  -l, --label                                                                       channel display label
+  -f, --messagefields=messagefields                                                 fields that define the message shape
+
+  -l, --label=label                                                                 channel display label
 
   -n, --name=name                                                                   (required) channel name
 
@@ -62,7 +64,7 @@ EXAMPLES
   $ sfdx force:lightning:messagechannel:create -n myChannel -l MyChannel -d messageChannels
 ```
 
-_See code: [lib/commands/lightning/create.js](https://github.com/dcarroll/lwcmsg/blob/v0.0.0/lib/commands/lightning/create.js)_
+_See code: [lib/commands/lightning/messagechannel/create.js](https://github.com/dcarroll/lwcmsg/blob/v0.0.0/lib/commands/lightning/messagechannel/create.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin

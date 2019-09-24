@@ -23,14 +23,15 @@ export default class Org extends SfdxCommand {
   `
   ];
 
-  public static args = [{name: 'file'}];
+  public static args = [{name: 'messagefields'}];
 
   protected static flagsConfig = {
     // flag with a value (-n, --name=VALUE)
     name: flags.string({char: 'n', required: true, description: messages.getMessage('nameFlagDescription')}),
     exposed: flags.boolean({char: 'e', default: false, description: messages.getMessage('exposedFlagDescription')}),
     label: flags.string({char: 'l', description: messages.getMessage('labelFlagDescription')}),
-    outputdir: flags.string({char: 'd', description: messages.getMessage('outputDirFlagDescription')})
+    outputdir: flags.string({char: 'd', description: messages.getMessage('outputDirFlagDescription')}),
+    messagefields: flags.array({char: 'f', description: messages.getMessage('messageFieldsFlagDescription')})
   };
 
   // Comment this out if your command does not require an org username
@@ -59,15 +60,31 @@ export default class Org extends SfdxCommand {
       this.flags.outputdir = join(projRoot, this.flags.outputdir);
     }
     mkdirp.sync(this.flags.outputdir);
-
+    let msgFields = '';
+    if (this.flags.messagefields.length > 0) {
+      for (let i = 0; i < this.flags.messagefields.length; i++) {
+        const msgField = this.flags.messagefields[i];
+        msgFields +=
+`    <lightningMessageFields>
+        <fieldName>${msgField}</fieldName>
+        <description>field ${msgField} description</description>
+    </lightningMessageFields>`;
+        if (i < this.flags.messagefields.length - 1) {
+          msgFields += '\n';
+        }
+      }
+    }
     const metaXml = `<?xml version="1.0" encoding="UTF-8"?>
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel>${this.flags.label}</masterLabel>
     <isExposed>${this.flags.exposed || false}</isExposed>
+${msgFields}
 </LightningMessageChannel`;
 
+    this.log(this.flags.messagefields);
     this.log(metaXml);
     fs.writeFileSync(join(this.flags.outputdir, this.flags.name + '.messageChannel'), metaXml);
+    this.log('Message channel created at: ' + this.flags.outputdir);
     return { };
   }
 

@@ -4,5 +4,6 @@
   "exposedFlagDescription": "expose the channel globally",
   "outputDirFlagDescription": "folder to put generated message channel in",
   "labelFlagDescription": "channel display label",
-  "missingDefaultDirError": "project has no default package directory"
+  "missingDefaultDirError": "project has no default package directory",
+  "messageFieldsFlagDescription": "fields that define the message shape"
 }
